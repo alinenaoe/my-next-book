@@ -1,100 +1,116 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
   display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  /* font-family: var(--font-geist-sans); */
+  /* background-image: url("/books.png"); */
+  background-size: contain;
+}
+
+.about {
+  position: fixed;
+  top: 0;
+  left: 30px;
+  width: 0px;
+  height: 200px;
+  border: 60px solid transparent;
+  border-bottom: 30px solid white;
+  background-color: #a8c686;
 }
 
 .main {
+  background: var(--background-transparent);
   display: flex;
   min-height: 100vh;
   width: 100%;
   max-width: 800px;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
   padding: 120px 60px;
+  gap: 2rem;
+
+  h1 {
+    align-self: center;
+    color: var(--color-primary);
+    font-size: 50px;
+  }
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
+.form {
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
 }
 
-.ctas a {
+.buttons {
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
+  gap: 1rem;
+
+  button {
+    /* background-color: var(--color-secondary);
+    border-radius: 4px;
+    border: none;
+    padding: 0.5rem;
+    min-width: 100px;
+    transition: background 0.2s;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #0000001f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-family: Inter; */
+  }
+
+  button:hover {
+    cursor: pointer;
+    background: #6f6f6f;
+  }
+
+  button:disabled {
+    background: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+  }
+}
+
+/* reset */
+
+.checkboxRoot {
+  background-color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  display: flex;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  justify-content: center;
+
+  /* box-shadow: 0 2px 10px var(--black-a7); */
+}
+.CheckboxRoot:hover {
+  /* background-color: var(--violet-3); */
+}
+.CheckboxRoot:focus {
+  box-shadow: 0 0 0 2px black;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.CheckboxIndicator {
+  /* color: var(--violet-11); */
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.Label {
+  color: white;
+  padding-left: 15px;
+  font-size: 15px;
+  line-height: 1;
 }
 
 /* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
+/* @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--button-primary-hover);
     border-color: transparent;
@@ -138,4 +154,4 @@ a.secondary {
     --button-secondary-hover: #1a1a1a;
     --button-secondary-border: #1a1a1a;
   }
-}
+} */

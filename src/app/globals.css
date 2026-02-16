@@ -1,6 +1,18 @@
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1f271b;
+
+  --background-light: #fff;
+  --background-transparent: #ffffffe8;
+
+  --color-primary: #e4572e;
+  --color-secondary: #000;
+  --color-tertiary: #f3a712;
+
+  --button-primary-selected: #ffe4dc;
+  --button-primary-hover: #ffe4dc;
+  --button-secondary-hover: #bee5bf;
+  --button-secondary-border: #ebebeb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,4 +51,8 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+button {
+  cursor: pointer;
 }

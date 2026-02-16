@@ -1,0 +1,30 @@
+.moodButtonsContainer {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.moodButton {
+  background-color: var(--background-light);
+  border-radius: 4px;
+  border: 1px solid #000;
+  padding: 0.5rem;
+  transition: background 0.2s;
+}
+
+.moodButton:hover {
+  background: var(--button-primary-hover);
+}
+
+.selectedMoodButton {
+  border-radius: 4px;
+  background-color: var(--button-primary-selected);
+  color: var(--text-secondary);
+  border: 1px solid #000;
+  padding: 0.5rem;
+  transition: background 0.2s;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
