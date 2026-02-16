@@ -3,8 +3,13 @@
 import styles from './page.module.css';
 import { Form } from 'radix-ui';
 import { motion } from 'motion/react';
-import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
-import Recommendations from './components/recommendations';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  EnvelopeClosedIcon,
+  Share1Icon,
+} from '@radix-ui/react-icons';
+import Recommendations from './components/StepResult/StepResult';
 import { Inter, Domine } from 'next/font/google';
 import StepMood from './components/StepMood/StepMood';
 import Bookmark from './components/Bookmark/Bookmark';
@@ -59,7 +64,7 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <Bookmark />
+      {/* <Bookmark /> */}
       <main className={`${styles.main} ${fontInter.className}`}>
         <h1 className={fontDomine.className}>
           {currentStep < 6 ? 'What should I read next?' : 'Good reading!'}
@@ -96,10 +101,14 @@ export default function Home() {
             />
           )}
 
+          {currentStep === 6 && <Recommendations books={data} />}
+
           <div className={styles.buttons}>
             {currentStep < 5 && (
               <>
                 <MotionButton
+                  color="indigo"
+                  variant="soft"
                   whileTap={{ scale: 0.95 }}
                   onClick={(e) => {
                     e.preventDefault();
@@ -114,6 +123,8 @@ export default function Home() {
                   Previous
                 </MotionButton>
                 <MotionButton
+                  color="indigo"
+                  variant="soft"
                   whileTap={{ scale: 0.95 }}
                   onClick={(e) => {
                     e.preventDefault();
@@ -131,8 +142,6 @@ export default function Home() {
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  // setCurrentStep(6);
-                  // call API
                   setMustGetRecommendations(true);
                 }}
                 disabled={nextButtonDisabled || isLoading}
@@ -141,23 +150,32 @@ export default function Home() {
                 Get my recommendations
               </Button>
             )}
+
+            {currentStep === 6 && (
+              <>
+                <Button>
+                  <Share1Icon />
+                  Share
+                </Button>
+                <Button>
+                  <EnvelopeClosedIcon />
+                  Send by email
+                </Button>
+                <Button
+                  color="orange"
+                  variant="soft"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    clearSelection();
+                    setMustGetRecommendations(false);
+                  }}
+                  // style={{ marginTop: 32 }}
+                >
+                  Restart
+                </Button>
+              </>
+            )}
           </div>
-
-          {currentStep === 6 && (
-            <>
-              <Recommendations books={data} />
-
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  clearSelection();
-                  setMustGetRecommendations(false);
-                }}
-              >
-                Restart
-              </button>
-            </>
-          )}
         </Form.Root>
       </main>
     </div>

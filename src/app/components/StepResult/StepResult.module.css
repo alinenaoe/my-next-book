@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.book {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  dt {
+    font-weight: 600;
+  }
+}
