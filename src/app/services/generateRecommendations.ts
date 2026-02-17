@@ -1,17 +1,22 @@
-const generateRecommendations = async ({}) => {
+export type GenerateRecommendationsParams = {
+  mood: string[];
+  length: string;
+  categoriesToAvoid: string[];
+  userAge: string;
+  readingGoal: string;
+};
+
+const generateRecommendations = async (
+  params: GenerateRecommendationsParams,
+) => {
   const response = await fetch('http://localhost:3333/generate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      mood: 'happy',
-      length: 'short',
-      categoriesToAvoid: ['horror', 'romance'],
-      userAge: 25,
-      readingGoal: 'improve vocabulary',
-    }),
+    body: JSON.stringify(params),
   });
+
   if (response.ok) {
     return response.json();
   }

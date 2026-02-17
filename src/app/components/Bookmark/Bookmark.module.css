@@ -6,12 +6,21 @@
   height: 200px;
   border: 60px solid transparent;
   border-bottom: 30px solid white;
-  background-color: #a8c686;
+  background-color: var(--muted-olive-light);
 }
 
 .bookmark:hover {
   height: 600px;
   transition: height 0.2s;
+}
+
+.credits {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bookmark:hover .credits {
+  opacity: 1;
 }
 
 .bookmark:not(:hover) {
@@ -31,4 +40,5 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-items: center;
 }

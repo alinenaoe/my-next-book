@@ -1,6 +1,7 @@
 import styles from './StepAvoid.module.css';
 import { motion } from 'motion/react';
 import { CheckIcon } from '@radix-ui/react-icons';
+import { Ysabeau_Office } from 'next/font/google';
 import { MAX_CATEGORIES_SELECTION } from '../../constants';
 
 type Category = {
@@ -17,6 +18,11 @@ type StepAvoidProps = {
   ) => void;
 };
 
+const fontYsabeau = Ysabeau_Office({
+  subsets: ['latin'],
+  weight: ['500', '600'],
+});
+
 const StepAvoid = ({
   categories,
   handleSelectBookCategoryToAvoid,
@@ -32,8 +38,8 @@ const StepAvoid = ({
       exit={{ opacity: 0 }}
     >
       <p>
-        Anything you’d rather skip? Tell us what you don’t enjoy so we can avoid
-        it. Select at least one option.
+        Anything you’d <strong>rather skip</strong>? Tell us what you don’t
+        enjoy so we can avoid it. Select at least one option.
       </p>
       <br />
       <div className={styles.categoryButtonsContainer}>
@@ -49,11 +55,11 @@ const StepAvoid = ({
                 handleSelectBookCategoryToAvoid(e, category.id);
               }}
               key={category.id}
-              className={
+              className={`${
                 isSelected
                   ? styles.selectedCategoryButton
                   : styles.categoryButton
-              }
+              } ${fontYsabeau.className}`}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{

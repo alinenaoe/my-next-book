@@ -11,20 +11,16 @@ const age = [
     label: '18-24',
   },
   {
-    value: '25-34',
-    label: '25-34',
+    value: '25-40',
+    label: '25-40',
   },
   {
-    value: '35-44',
-    label: '35-44',
+    value: '40-60',
+    label: '40-60',
   },
   {
-    value: '45-54',
-    label: '45-54',
-  },
-  {
-    value: '55+',
-    label: '55+',
+    value: '60+',
+    label: '60+',
   },
   {
     value: 'preferNotToSay',
@@ -45,8 +41,8 @@ const StepAge = ({ handleSelectAge, userAge }: StepAgeProps) => {
       exit={{ opacity: 0 }}
     >
       <p>
-        Which age range do you fall into? This helps us avoid recommendations
-        that feel too young or too mature.
+        Which <strong>age range</strong> do you fall into? This helps us avoid
+        recommendations that feel too young or too mature.
       </p>
       <div className={styles.length}>
         {age.map((option) => (

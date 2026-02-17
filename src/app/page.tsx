@@ -10,7 +10,7 @@ import {
   Share1Icon,
 } from '@radix-ui/react-icons';
 import Recommendations from './components/StepResult/StepResult';
-import { Inter, Domine } from 'next/font/google';
+import { Boldonse, Ysabeau_Office } from 'next/font/google';
 import StepMood from './components/StepMood/StepMood';
 import Bookmark from './components/Bookmark/Bookmark';
 import StepLength from './components/StepLength/StepLength';
@@ -22,11 +22,12 @@ import { useGetRecommendations } from './hooks/useGetRecommendations';
 import { useEffect, useState } from 'react';
 import { Button } from '@radix-ui/themes';
 
-const fontDomine = Domine({
-  subsets: ['latin'],
+const fontBoldonse = Boldonse({
+  subsets: ['latin', 'latin-ext'],
+  weight: '400',
 });
 
-const fontInter = Inter({
+const fontInter = Ysabeau_Office({
   subsets: ['latin'],
 });
 
@@ -54,6 +55,15 @@ export default function Home() {
 
   const { data, isLoading } = useGetRecommendations({
     enabled: mustGetRecommendations,
+    params: {
+      categoriesToAvoid: bookCategoriesToAvoid
+        .filter((category) => category.selected)
+        .map((category) => category.label),
+      length: bookLength,
+      mood: bookMood.filter((item) => item.selected).map((item) => item.label),
+      readingGoal,
+      userAge,
+    },
   });
 
   useEffect(() => {
@@ -64,9 +74,9 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      {/* <Bookmark /> */}
+      <Bookmark />
       <main className={`${styles.main} ${fontInter.className}`}>
-        <h1 className={fontDomine.className}>
+        <h1 className={fontBoldonse.className}>
           {currentStep < 6 ? 'What should I read next?' : 'Good reading!'}
         </h1>
 
@@ -108,7 +118,9 @@ export default function Home() {
               <>
                 <MotionButton
                   color="indigo"
-                  variant="soft"
+                  size="3"
+                  variant="solid"
+                  highContrast
                   whileTap={{ scale: 0.95 }}
                   onClick={(e) => {
                     e.preventDefault();
@@ -124,7 +136,9 @@ export default function Home() {
                 </MotionButton>
                 <MotionButton
                   color="indigo"
-                  variant="soft"
+                  size="3"
+                  variant="solid"
+                  highContrast
                   whileTap={{ scale: 0.95 }}
                   onClick={(e) => {
                     e.preventDefault();
@@ -139,37 +153,56 @@ export default function Home() {
             )}
 
             {currentStep === 5 && (
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setMustGetRecommendations(true);
-                }}
-                disabled={nextButtonDisabled || isLoading}
-                loading={isLoading}
-              >
-                Get my recommendations
-              </Button>
+              <>
+                <MotionButton
+                  color="indigo"
+                  size="3"
+                  variant="solid"
+                  highContrast
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentStep((value) => value - 1);
+                  }}
+                >
+                  <ArrowLeftIcon />
+                  Previous
+                </MotionButton>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMustGetRecommendations(true);
+                  }}
+                  disabled={nextButtonDisabled || isLoading}
+                  loading={isLoading}
+                  color="green"
+                  size="3"
+                >
+                  Get my recommendations
+                </Button>
+              </>
             )}
 
             {currentStep === 6 && (
               <>
-                <Button>
+                <Button color="green" size="3" variant="solid">
                   <Share1Icon />
                   Share
                 </Button>
-                <Button>
+                <Button color="green" size="3" variant="solid">
                   <EnvelopeClosedIcon />
                   Send by email
                 </Button>
                 <Button
-                  color="orange"
-                  variant="soft"
+                  color="indigo"
+                  size="3"
+                  variant="solid"
+                  highContrast
                   onClick={(e) => {
                     e.preventDefault();
                     clearSelection();
                     setMustGetRecommendations(false);
                   }}
-                  // style={{ marginTop: 32 }}
                 >
                   Restart
                 </Button>

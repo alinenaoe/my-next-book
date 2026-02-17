@@ -1,12 +1,17 @@
 import { ChangeEvent, useState } from 'react';
-import { bookMoodOptions, categoriesToAvoid } from '../constants';
+import {
+  bookMoodOptions,
+  categoriesToAvoid,
+  Category,
+  Mood,
+} from '../constants';
 
 const useBookPreferences = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [bookMood, setBookMood] = useState(bookMoodOptions);
+  const [bookMood, setBookMood] = useState<Mood[]>(bookMoodOptions);
   const [bookLength, setBookLength] = useState<string>('');
   const [bookCategoriesToAvoid, setBookCategoriesToAvoid] =
-    useState(categoriesToAvoid);
+    useState<Category[]>(categoriesToAvoid);
   const [userAge, setUserAge] = useState<string>('');
   const [readingGoal, setReadingGoal] = useState<string>('');
 

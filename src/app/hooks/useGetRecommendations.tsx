@@ -1,10 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import generateRecommendations from '../services/generateRecommendations';
+import generateRecommendations, {
+  GenerateRecommendationsParams,
+} from '../services/generateRecommendations';
 
-export const useGetRecommendations = ({ enabled }: { enabled: boolean }) => {
+export const useGetRecommendations = ({
+  enabled,
+  params,
+}: {
+  enabled: boolean;
+  params: GenerateRecommendationsParams;
+}) => {
   return useQuery({
     queryKey: ['recommendations'],
-    queryFn: generateRecommendations,
+    queryFn: () => generateRecommendations(params),
     enabled,
   });
 };

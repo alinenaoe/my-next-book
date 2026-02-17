@@ -1,6 +1,7 @@
 import styles from './StepMood.module.css';
 import { motion } from 'motion/react';
 import { CheckIcon } from '@radix-ui/react-icons';
+import { Ysabeau_Office } from 'next/font/google';
 import { MAX_MOOD_SELECTION } from '../../constants';
 
 type Mood = {
@@ -16,6 +17,11 @@ type StepMoodProps = {
     moodId: string,
   ) => void;
 };
+
+const fontYsabeau = Ysabeau_Office({
+  subsets: ['latin'],
+  weight: ['500', '600'],
+});
 
 const StepMood = ({ moodSelection, handleSelectBookMood }: StepMoodProps) => {
   const maxMoodSelected =
@@ -45,9 +51,9 @@ const StepMood = ({ moodSelection, handleSelectBookMood }: StepMoodProps) => {
                 handleSelectBookMood(e, mood.id);
               }}
               key={mood.id}
-              className={
+              className={`${
                 isSelected ? styles.selectedMoodButton : styles.moodButton
-              }
+              } ${fontYsabeau.className}`}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{

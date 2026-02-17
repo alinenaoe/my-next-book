@@ -43,9 +43,9 @@ const StepGoal = ({ handleSelectGoal, readingGoal }: StepGoalProps) => {
             <input
               type="radio"
               name="reading-goal"
-              value={option.value}
+              value={option.label}
               onChange={handleSelectGoal}
-              checked={option.value === readingGoal}
+              checked={option.label === readingGoal}
             />
             {option.label}
           </label>

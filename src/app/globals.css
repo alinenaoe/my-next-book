@@ -5,22 +5,27 @@
   --background-light: #fff;
   --background-transparent: #ffffffe8;
 
-  --color-primary: #e4572e;
-  --color-secondary: #000;
-  --color-tertiary: #f3a712;
+  --space-indigo: #222e50;
+  --pine-blue: #426b69;
+  --muted-olive: #8bb174;
+  --muted-olive-light: #b5ca8d;
 
-  --button-primary-selected: #ffe4dc;
-  --button-primary-hover: #ffe4dc;
+  --color-primary: #426b69;
+  --color-secondary: #14bdeb;
+  --color-tertiary: #d99ac5;
+
+  --button-primary-selected: var(--muted-olive);
+  --button-primary-hover: var(--muted-olive-light);
   --button-secondary-hover: #bee5bf;
   --button-secondary-border: #ebebeb;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html,
 body {
@@ -55,4 +60,8 @@ a {
 
 button {
   cursor: pointer;
+}
+
+strong {
+  color: var(--color-primary);
 }

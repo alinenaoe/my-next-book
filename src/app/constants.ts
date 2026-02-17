@@ -1,4 +1,4 @@
-export const bookMoodOptions = [
+export const bookMoodOptions: Mood[] = [
   {
     id: 'inspiring',
     label: 'Inspiring',
@@ -129,7 +129,15 @@ export const bookMoodOptions = [
 export const MAX_MOOD_SELECTION = 3;
 export const MAX_CATEGORIES_SELECTION = 3;
 
-export const categoriesToAvoid = [
+export type Category = {
+  id: string;
+  label: string;
+  selected: boolean;
+};
+
+export type Mood = Category;
+
+export const categoriesToAvoid: Category[] = [
   {
     id: 'crime',
     label: 'Crime',
