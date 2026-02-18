@@ -1,24 +1,6 @@
 import { motion } from 'motion/react';
 import styles from './StepLength.module.css';
-
-const length = [
-  {
-    value: 'short',
-    label: 'A quick read (under 250 pages)',
-  },
-  {
-    value: 'medium',
-    label: 'A few cozy reading session (250-450 pages)',
-  },
-  {
-    value: 'long',
-    label: "I'm ready for a big story (450+ pages)",
-  },
-  {
-    value: 'any',
-    label: 'No preference',
-  },
-];
+import { length } from '@/app/constants';
 
 type StepLengthProps = {
   handleSelectBookLength: (event: React.ChangeEvent<HTMLInputElement>) => void;

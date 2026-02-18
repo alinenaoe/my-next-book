@@ -14,5 +14,6 @@ export const useGetRecommendations = ({
     queryKey: ['recommendations'],
     queryFn: () => generateRecommendations(params),
     enabled,
+    refetchOnWindowFocus: false,
   });
 };

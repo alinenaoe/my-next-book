@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import { motion } from 'motion/react';
-import { Share1Icon, EnvelopeClosedIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
 import styles from './StepResult.module.css';
-import { useState } from 'react';
-import { Button } from '@radix-ui/themes';
 
 type RecommendedBook = {
   isbn: string;
-  name: string;
+  title: string;
   author: string;
   reason: string;
   coverUrl: string;
@@ -19,6 +17,8 @@ type RecommendationsProps = {
   books: RecommendedBook[];
 };
 
+const MotionBook = motion.create(Link);
+
 const Recommendations = ({ books }: RecommendationsProps) => {
   return (
     <div className={styles.container}>
@@ -26,16 +26,23 @@ const Recommendations = ({ books }: RecommendationsProps) => {
         return (
           <motion.div key={book.isbn}>
             <div className={styles.book}>
-              <Image
-                src={book.coverUrl}
-                width={200}
-                height={300}
-                alt={book.name}
-              />
+              <MotionBook
+                whileHover={{ scale: 1.02 }}
+                href={`https://books.google.com/books?vid=ISBN${book.isbn}`}
+                target="_blank"
+              >
+                <Image
+                  src={book.coverUrl}
+                  width={200}
+                  height={300}
+                  alt={book.title}
+                />
+              </MotionBook>
+
               <div className={styles.description}>
                 <div>
                   <dt>Title</dt>
-                  <dd>{book.name}</dd>
+                  <dd>{book.title}</dd>
                 </div>
 
                 <div>

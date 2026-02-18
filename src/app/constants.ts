@@ -20,7 +20,7 @@ export const bookMoodOptions: Mood[] = [
     selected: false,
   },
   {
-    id: 'breath-taking	',
+    id: 'breath-taking',
     label: 'Breath-taking	',
     selected: false,
   },
@@ -197,5 +197,24 @@ export const categoriesToAvoid: Category[] = [
     id: 'classics',
     label: 'Classics',
     selected: false,
+  },
+];
+
+export const length = [
+  {
+    value: 'short',
+    label: 'A quick read (under 250 pages)',
+  },
+  {
+    value: 'medium',
+    label: 'A few cozy reading session (250-450 pages)',
+  },
+  {
+    value: 'long',
+    label: "I'm ready for a big story (450+ pages)",
+  },
+  {
+    value: 'any',
+    label: 'No preference',
   },
 ];
