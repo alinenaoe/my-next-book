@@ -3,20 +3,35 @@
   top: 0;
   left: 30px;
   width: 0px;
-  height: 200px;
+  height: 145px;
   border: 60px solid transparent;
   border-bottom: 30px solid white;
   background-color: var(--muted-olive-light);
+
+  @media (max-width: 992px) {
+    height: 145px;
+    border: 24px solid transparent;
+    border-bottom: 12px solid white;
+    left: 80%;
+  }
 }
 
 .bookmark:hover {
   height: 600px;
   transition: height 0.2s;
+
+  @media (max-width: 992px) {
+    height: 145px;
+  }
 }
 
 .credits {
   opacity: 0;
   transition: opacity 0.3s ease;
+
+  @media (max-width: 992px) {
+    opacity: 1;
+  }
 }
 
 .bookmark:hover .credits {
@@ -34,6 +49,10 @@
   flex-direction: column;
   position: absolute;
   left: -50px;
+
+  @media (max-width: 992px) {
+    bottom: 16px;
+  }
 }
 
 .contact {

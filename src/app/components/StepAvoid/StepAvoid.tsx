@@ -39,7 +39,8 @@ const StepAvoid = ({
     >
       <p>
         Anything you’d <strong>rather skip</strong>? Tell us what you don’t
-        enjoy so we can avoid it. Select at least one option.
+        enjoy so we can avoid it. Select at least one option and up to{' '}
+        {MAX_CATEGORIES_SELECTION} categories.
       </p>
       <br />
       <div className={styles.categoryButtonsContainer}>

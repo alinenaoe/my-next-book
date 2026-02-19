@@ -14,7 +14,7 @@ const Bookmark = () => {
           <Tooltip content="LinkedIn">
             <IconButton color="gray" asChild variant="soft" highContrast>
               <a
-                href="https://www.linkedin.com/in/your-profile"
+                href="https://www.linkedin.com/in/alinenaoe/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -26,7 +26,7 @@ const Bookmark = () => {
           <Tooltip content="Github">
             <IconButton color="gray" asChild variant="soft" highContrast>
               <a
-                href="https://www.linkedin.com/in/your-profile"
+                href="https://github.com/alinenaoe"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -38,7 +38,7 @@ const Bookmark = () => {
           <Tooltip content="E-mail">
             <IconButton color="gray" asChild variant="soft" highContrast>
               <a
-                href="https://www.linkedin.com/in/your-profile"
+                href="mailto:alinenaoe@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >

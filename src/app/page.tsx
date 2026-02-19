@@ -8,6 +8,7 @@ import {
   ArrowRightIcon,
   EnvelopeClosedIcon,
   Share1Icon,
+  BookmarkIcon,
 } from '@radix-ui/react-icons';
 import Recommendations from './components/StepResult/StepResult';
 import { Boldonse, Ysabeau_Office } from 'next/font/google';
@@ -20,7 +21,7 @@ import StepAge from './components/StepAge/StepAge';
 import StepGoal from './components/StepGoal/StepGoal';
 import { useGetRecommendations } from './hooks/useGetRecommendations';
 import { useEffect, useState } from 'react';
-import { Button } from '@radix-ui/themes';
+import { Button, Spinner } from '@radix-ui/themes';
 
 const fontBoldonse = Boldonse({
   subsets: ['latin', 'latin-ext'],
@@ -164,6 +165,7 @@ export default function Home() {
                     e.preventDefault();
                     setCurrentStep((value) => value - 1);
                   }}
+                  disabled={isLoading}
                 >
                   <ArrowLeftIcon />
                   Previous
@@ -178,7 +180,18 @@ export default function Home() {
                   color="green"
                   size="3"
                 >
-                  Get my recommendations
+                  {isLoading && (
+                    <>
+                      <Spinner loading />
+                      Generating recommendations...
+                    </>
+                  )}
+
+                  {!isLoading && (
+                    <>
+                      <BookmarkIcon /> Get my recommendations
+                    </>
+                  )}
                 </Button>
               </>
             )}
