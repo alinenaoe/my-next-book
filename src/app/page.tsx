@@ -20,7 +20,7 @@ import StepAvoid from './components/StepAvoid/StepAvoid';
 import StepAge from './components/StepAge/StepAge';
 import StepGoal from './components/StepGoal/StepGoal';
 import { useGetRecommendations } from './hooks/useGetRecommendations';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button, Spinner } from '@radix-ui/themes';
 
 const fontBoldonse = Boldonse({
@@ -35,8 +35,6 @@ const fontInter = Ysabeau_Office({
 const MotionButton = motion.create(Button);
 
 export default function Home() {
-  const [mustGetRecommendations, setMustGetRecommendations] = useState(false);
-
   const {
     bookMood,
     handleSelectBookMood,
@@ -54,8 +52,7 @@ export default function Home() {
     clearSelection,
   } = useBookPreferences();
 
-  const { data, isLoading } = useGetRecommendations({
-    enabled: mustGetRecommendations,
+  const { data, isFetching, refetch } = useGetRecommendations({
     params: {
       categoriesToAvoid: bookCategoriesToAvoid
         .filter((category) => category.selected)
@@ -68,10 +65,11 @@ export default function Home() {
   });
 
   useEffect(() => {
-    if (data && mustGetRecommendations) {
+    console.log(data);
+    if (data && !isFetching) {
       setCurrentStep(6);
     }
-  }, [data, setCurrentStep, mustGetRecommendations]);
+  }, [data, setCurrentStep, isFetching]);
 
   return (
     <div className={styles.page}>
@@ -154,7 +152,7 @@ export default function Home() {
             )}
 
             {currentStep === 5 && (
-              <>
+              <div className={styles.result}>
                 <MotionButton
                   color="indigo"
                   size="3"
@@ -165,7 +163,7 @@ export default function Home() {
                     e.preventDefault();
                     setCurrentStep((value) => value - 1);
                   }}
-                  disabled={isLoading}
+                  disabled={isFetching}
                 >
                   <ArrowLeftIcon />
                   Previous
@@ -173,31 +171,30 @@ export default function Home() {
                 <Button
                   onClick={(e) => {
                     e.preventDefault();
-                    setMustGetRecommendations(true);
+                    refetch();
                   }}
-                  disabled={nextButtonDisabled || isLoading}
-                  loading={isLoading}
+                  disabled={nextButtonDisabled || isFetching}
                   color="green"
                   size="3"
                 >
-                  {isLoading && (
+                  {isFetching && (
                     <>
                       <Spinner loading />
                       Generating recommendations...
                     </>
                   )}
 
-                  {!isLoading && (
+                  {!isFetching && (
                     <>
                       <BookmarkIcon /> Get my recommendations
                     </>
                   )}
                 </Button>
-              </>
+              </div>
             )}
 
             {currentStep === 6 && (
-              <>
+              <div className={styles.result}>
                 <Button color="green" size="3" variant="solid">
                   <Share1Icon />
                   Share
@@ -214,12 +211,11 @@ export default function Home() {
                   onClick={(e) => {
                     e.preventDefault();
                     clearSelection();
-                    setMustGetRecommendations(false);
                   }}
                 >
                   Restart
                 </Button>
-              </>
+              </div>
             )}
           </div>
         </Form.Root>

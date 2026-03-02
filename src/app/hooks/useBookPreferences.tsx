@@ -5,6 +5,7 @@ import {
   Category,
   Mood,
 } from '../constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 const useBookPreferences = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -14,6 +15,8 @@ const useBookPreferences = () => {
     useState<Category[]>(categoriesToAvoid);
   const [userAge, setUserAge] = useState<string>('');
   const [readingGoal, setReadingGoal] = useState<string>('');
+
+  const queryClient = useQueryClient();
 
   const nextButtonDisabled =
     (currentStep === 1 &&
@@ -76,6 +79,7 @@ const useBookPreferences = () => {
     setBookCategoriesToAvoid(categoriesToAvoid);
     setUserAge('');
     setReadingGoal('');
+    queryClient.invalidateQueries({ queryKey: ['recommendations'] });
   };
 
   return {

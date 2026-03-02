@@ -5,12 +5,12 @@ import Link from 'next/link';
 import styles from './StepResult.module.css';
 
 type RecommendedBook = {
-  isbn: string;
   title: string;
   author: string;
   reason: string;
   coverUrl: string;
   abstract: string;
+  googleBooksLink: string;
 };
 
 type RecommendationsProps = {
@@ -24,17 +24,17 @@ const Recommendations = ({ books }: RecommendationsProps) => {
     <div className={styles.container}>
       {books.map((book) => {
         return (
-          <motion.div key={book.isbn}>
+          <motion.div key={book.title}>
             <div className={styles.book}>
               <MotionBook
                 whileHover={{ scale: 1.02 }}
-                href={`https://books.google.com/books?vid=ISBN${book.isbn}`}
+                href={book.googleBooksLink}
                 target="_blank"
               >
                 <Image
                   src={book.coverUrl}
-                  width={200}
-                  height={300}
+                  width={128}
+                  height={198}
                   alt={book.title}
                 />
               </MotionBook>

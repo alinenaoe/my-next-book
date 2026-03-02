@@ -9,7 +9,7 @@ export type GenerateRecommendationsParams = {
 const generateRecommendations = async (
   params: GenerateRecommendationsParams,
 ) => {
-  const response = await fetch('http://localhost:3333/generate', {
+  const response = await fetch('http://localhost:3333/recommendations', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
