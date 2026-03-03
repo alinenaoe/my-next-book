@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Next Book
 
-## Getting Started
+## Description
 
-First, run the development server:
+My Next Book is a web application designed to help users find their next favorite book based on their preferences. By answering a series of questions about their mood, goals, and other factors, users receive personalized book recommendations.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+One of the app's unique features is its commitment to diversity. The recommendation engine ensures that at least one female author is included in the suggestions and strives to feature authors from various cultural backgrounds.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Interactive Steps**: Users go through multiple steps to define their preferences, such as mood, length, and goals.
+- **Personalized Recommendations**: The app uses a recommendation engine to suggest books that match the user's preferences.
+- **Responsive Design**: The app is designed to work seamlessly on both desktop and mobile devices.
+- **Share recommendations**: [in progress].
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Recommendations engine
 
-## Learn More
+The backend, developed with Node.js and Fastify, is responsible for handling API requests, managing data, and ensuring efficient communication between the client and server. You can find the backend repository [here](https://github.com/alinenaoe/my-next-book-api).
 
-To learn more about Next.js, take a look at the following resources:
+The app leverages OpenAI's to generate personalized book suggestions based on user preferences. Additionally, it integrates with the Google Books API to fetch detailed information about the recommended books.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js**: A React-based framework for building fast and user-friendly web applications.
+- **TypeScript**: Ensures type safety and better developer experience.
+- **CSS Modules**: For modular and maintainable styling.
