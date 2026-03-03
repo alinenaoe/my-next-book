@@ -1,5 +1,7 @@
 # My Next Book
 
+<img width="600" alt="" src="https://github.com/user-attachments/assets/7c92b319-0bfc-4a09-b23e-ce6b6402719f" />
+
 ## Description
 
 My Next Book is a web application designed to help users find their next favorite book based on their preferences. By answering a series of questions about their mood, goals, and other factors, users receive personalized book recommendations.
@@ -12,6 +14,9 @@ One of the app's unique features is its commitment to diversity. The recommendat
 - **Personalized Recommendations**: The app uses a recommendation engine to suggest books that match the user's preferences.
 - **Responsive Design**: The app is designed to work seamlessly on both desktop and mobile devices.
 - **Share recommendations**: [in progress].
+
+<img width="600" alt="" src="https://github.com/user-attachments/assets/28c5a612-328f-4136-88af-f33d684aeb06" />
+
 
 ## Recommendations engine
 
