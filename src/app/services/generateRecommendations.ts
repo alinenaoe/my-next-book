@@ -9,13 +9,16 @@ export type GenerateRecommendationsParams = {
 const generateRecommendations = async (
   params: GenerateRecommendationsParams,
 ) => {
-  const response = await fetch('http://localhost:3333/recommendations', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    'https://my-next-book-api.onrender.com/recommendations',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
     },
-    body: JSON.stringify(params),
-  });
+  );
 
   if (response.ok) {
     return response.json();
