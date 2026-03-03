@@ -65,7 +65,6 @@ export default function Home() {
   });
 
   useEffect(() => {
-    console.log(data);
     if (data && !isFetching) {
       setCurrentStep(6);
     }
