@@ -1,11 +1,7 @@
 import { ChangeEvent, useState } from 'react';
-import {
-  bookMoodOptions,
-  categoriesToAvoid,
-  Category,
-  Mood,
-} from '../constants';
+import { bookMoodOptions, categoriesToAvoid } from '@/app/constants';
 import { useQueryClient } from '@tanstack/react-query';
+import { Mood, Category } from '@/app/types';
 
 const useBookPreferences = () => {
   const [currentStep, setCurrentStep] = useState(1);
