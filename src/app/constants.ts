@@ -1,3 +1,5 @@
+import { Mood, Category } from './types';
+
 export const bookMoodOptions: Mood[] = [
   {
     id: 'inspiring',
@@ -128,14 +130,6 @@ export const bookMoodOptions: Mood[] = [
 
 export const MAX_MOOD_SELECTION = 3;
 export const MAX_CATEGORIES_SELECTION = 3;
-
-export type Category = {
-  id: string;
-  label: string;
-  selected: boolean;
-};
-
-export type Mood = Category;
 
 export const categoriesToAvoid: Category[] = [
   {

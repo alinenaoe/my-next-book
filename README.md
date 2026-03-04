@@ -13,16 +13,15 @@ One of the app's unique features is its commitment to diversity. The recommendat
 - **Interactive Steps**: Users go through multiple steps to define their preferences, such as mood, length, and goals.
 - **Personalized Recommendations**: The app uses a recommendation engine to suggest books that match the user's preferences.
 - **Responsive Design**: The app is designed to work seamlessly on both desktop and mobile devices.
-- **Share recommendations**: [in progress].
+- **Share recommendations**: _(coming soon)_
 
 <img width="600" alt="" src="https://github.com/user-attachments/assets/28c5a612-328f-4136-88af-f33d684aeb06" />
-
 
 ## Recommendations engine
 
 The backend, developed with Node.js and Fastify, is responsible for handling API requests, managing data, and ensuring efficient communication between the client and server. You can find the backend repository [here](https://github.com/alinenaoe/my-next-book-api).
 
-The app leverages OpenAI's to generate personalized book suggestions based on user preferences. Additionally, it integrates with the Google Books API to fetch detailed information about the recommended books.
+The app leverages OpenAI to generate personalized book suggestions based on user preferences. Additionally, it integrates with the Google Books API to fetch detailed information about the recommended books.
 
 ## Technologies Used
 

@@ -17,7 +17,7 @@ const StepLength = ({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0 }}
     >
-      <p>How long do you want your next book to be?</p>
+      <p>How big a story are you up for?</p>
       <div className={styles.length}>
         {length.map((option) => (
           <label key={option.value}>

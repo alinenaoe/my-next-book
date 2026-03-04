@@ -1,8 +1,8 @@
 import styles from './StepAvoid.module.css';
 import { motion } from 'motion/react';
 import { CheckIcon } from '@radix-ui/react-icons';
-import { Ysabeau_Office } from 'next/font/google';
-import { MAX_CATEGORIES_SELECTION } from '../../constants';
+import { MAX_CATEGORIES_SELECTION } from '@/app/constants';
+import { fontYsabeau } from '@/app/fonts';
 
 type Category = {
   id: string;
@@ -17,11 +17,6 @@ type StepAvoidProps = {
     categoryId: string,
   ) => void;
 };
-
-const fontYsabeau = Ysabeau_Office({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-});
 
 const StepAvoid = ({
   categories,

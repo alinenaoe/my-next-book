@@ -11,7 +11,7 @@ import {
   BookmarkIcon,
 } from '@radix-ui/react-icons';
 import Recommendations from './components/StepResult/StepResult';
-import { Boldonse, Ysabeau_Office } from 'next/font/google';
+import { fontBoldonse, fontYsabeau } from '@/app/fonts';
 import StepMood from './components/StepMood/StepMood';
 import Bookmark from './components/Bookmark/Bookmark';
 import StepLength from './components/StepLength/StepLength';
@@ -23,14 +23,6 @@ import { useGetRecommendations } from './hooks/useGetRecommendations';
 import { useEffect } from 'react';
 import { Button, Spinner } from '@radix-ui/themes';
 
-const fontBoldonse = Boldonse({
-  subsets: ['latin', 'latin-ext'],
-  weight: '400',
-});
-
-const fontInter = Ysabeau_Office({
-  subsets: ['latin'],
-});
 
 const MotionButton = motion.create(Button);
 
@@ -73,7 +65,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <Bookmark />
-      <main className={`${styles.main} ${fontInter.className}`}>
+      <main className={`${styles.main} ${fontYsabeau.className}`}>
         <h1 className={fontBoldonse.className}>
           {currentStep < 6 ? 'What should I read next?' : 'Good reading!'}
         </h1>

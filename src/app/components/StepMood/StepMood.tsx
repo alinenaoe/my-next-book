@@ -1,14 +1,10 @@
 import styles from './StepMood.module.css';
 import { motion } from 'motion/react';
 import { CheckIcon } from '@radix-ui/react-icons';
-import { Ysabeau_Office } from 'next/font/google';
-import { MAX_MOOD_SELECTION } from '../../constants';
-
-type Mood = {
-  id: string;
-  label: string;
-  selected: boolean;
-};
+import { MAX_MOOD_SELECTION } from '@/app/constants';
+import { Mood } from '@/app/types';
+import { fontYsabeau } from '@/app/fonts';
+import { useCallback } from 'react';
 
 type StepMoodProps = {
   moodSelection: Mood[];
@@ -18,14 +14,17 @@ type StepMoodProps = {
   ) => void;
 };
 
-const fontYsabeau = Ysabeau_Office({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-});
-
 const StepMood = ({ moodSelection, handleSelectBookMood }: StepMoodProps) => {
   const maxMoodSelected =
     moodSelection.filter((mood) => mood.selected).length === MAX_MOOD_SELECTION;
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, mood: Mood) => {
+      if (maxMoodSelected && !mood.selected) return;
+      handleSelectBookMood(e, mood.id);
+    },
+    [maxMoodSelected, handleSelectBookMood],
+  );
 
   return (
     <motion.div
@@ -34,10 +33,10 @@ const StepMood = ({ moodSelection, handleSelectBookMood }: StepMoodProps) => {
       exit={{ opacity: 0 }}
     >
       <p>
-        How do you want this next reading to be? Select up to{' '}
-        <strong>3 options</strong>
+        What feeling do you want your next read to evoke? Pick up to{' '}
+        <strong>{MAX_MOOD_SELECTION} moods</strong>
       </p>
-      <br />
+
       <div className={styles.moodButtonsContainer}>
         {moodSelection.map((mood, index) => {
           const isSelected = mood.selected;
@@ -46,10 +45,7 @@ const StepMood = ({ moodSelection, handleSelectBookMood }: StepMoodProps) => {
             <motion.button
               type="button"
               whileTap={{ scale: 0.95 }}
-              onClick={(e) => {
-                if (maxMoodSelected && !mood.selected) return;
-                handleSelectBookMood(e, mood.id);
-              }}
+              onClick={(e) => handleClick(e, mood)}
               key={mood.id}
               className={`${
                 isSelected ? styles.selectedMoodButton : styles.moodButton
