@@ -212,3 +212,20 @@ export const length = [
     label: 'No preference',
   },
 ];
+
+export const ageOptions = [
+  { value: 'under18', label: 'Under 18' },
+  { value: '18-24', label: '18-24' },
+  { value: '25-40', label: '25-40' },
+  { value: '40-60', label: '40-60' },
+  { value: '60+', label: '60+' },
+  { value: 'preferNotToSay', label: 'Prefer not to say' },
+];
+
+export const readingGoalOptions = [
+  { value: 'relax', label: 'To relax and unwind' },
+  { value: 'learn', label: 'To learn something new' },
+  { value: 'escape', label: 'To escape into another world' },
+  { value: 'inspire', label: 'To feel inspired' },
+  { value: 'fun', label: 'Just for fun' },
+];

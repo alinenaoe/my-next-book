@@ -1,3 +1,5 @@
+import { RecommendedBook } from '@/app/types';
+
 export type GenerateRecommendationsParams = {
   mood: string[];
   length: string;
@@ -8,7 +10,7 @@ export type GenerateRecommendationsParams = {
 
 const generateRecommendations = async (
   params: GenerateRecommendationsParams,
-) => {
+): Promise<RecommendedBook[]> => {
   const response = await fetch(
     'https://my-next-book-api.onrender.com/recommendations',
     {
@@ -20,9 +22,11 @@ const generateRecommendations = async (
     },
   );
 
-  if (response.ok) {
-    return response.json();
+  if (!response.ok) {
+    throw new Error('Failed to fetch recommendations');
   }
+
+  return response.json();
 };
 
 export default generateRecommendations;

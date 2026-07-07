@@ -1,31 +1,33 @@
 :root {
-  --background: #ffffff;
-  --foreground: #1f271b;
+  --color-bg: #fffff1;
+  --color-bg-raised: #ffffff;
+  --color-bg-transparent: #fffff1e8;
 
-  --background-light: #fff;
-  --background-transparent: #ffffffe8;
+  --color-ink: #000000;
+  --color-ink-muted: #5e5e5e;
+  --color-ink-faint: #a3a3a3;
 
-  --space-indigo: #222e50;
-  --pine-blue: #426b69;
-  --muted-olive: #8bb174;
-  --muted-olive-light: #b5ca8d;
+  --color-accent: #f8cc34;
+  --color-accent-hover: #ffe600;
+  --color-accent-selected: #000000;
+  --color-accent-selected-text: #fffff1;
+  --color-accent-soft: #fef8ca;
 
-  --color-primary: #426b69;
-  --color-secondary: #14bdeb;
-  --color-tertiary: #d99ac5;
+  --color-border: #000000;
+  --color-border-strong: #000000;
+  --color-error: #d64545;
 
-  --button-primary-selected: var(--muted-olive);
-  --button-primary-hover: var(--muted-olive-light);
-  --button-secondary-hover: #bee5bf;
-  --button-secondary-border: #ebebeb;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  --radius-md: 999px;
+
+  --font-heading: var(--font-display), Georgia, serif;
+  --font-body: var(--font-sans-body), Arial, Helvetica, sans-serif;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 html,
 body {
@@ -34,9 +36,9 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -52,16 +54,14 @@ a {
   text-decoration: none;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
-
 button {
   cursor: pointer;
 }
 
 strong {
-  color: var(--color-primary);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 2px;
 }

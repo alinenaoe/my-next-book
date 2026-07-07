@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { bookMoodOptions, categoriesToAvoid } from '@/app/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { Mood, Category } from '@/app/types';
@@ -29,15 +29,9 @@ const useBookPreferences = () => {
     moodId: string,
   ): void => {
     e.preventDefault();
-
-    const updatedMoods = bookMood.map((m) => {
-      if (m.id === moodId) {
-        return { ...m, selected: !m.selected };
-      }
-      return m;
-    });
-
-    setBookMood(updatedMoods);
+    setBookMood(bookMood.map((m) =>
+      m.id === moodId ? { ...m, selected: !m.selected } : m,
+    ));
   };
 
   const handleSelectBookCategoryToAvoid = (
@@ -45,28 +39,14 @@ const useBookPreferences = () => {
     categoryId: string,
   ): void => {
     e.preventDefault();
-
-    const updatedCategories = bookCategoriesToAvoid.map((m) => {
-      if (m.id === categoryId) {
-        return { ...m, selected: !m.selected };
-      }
-      return m;
-    });
-
-    setBookCategoriesToAvoid(updatedCategories);
+    setBookCategoriesToAvoid(bookCategoriesToAvoid.map((m) =>
+      m.id === categoryId ? { ...m, selected: !m.selected } : m,
+    ));
   };
 
-  const handleSelectBookLength = (e: ChangeEvent<HTMLInputElement>) => {
-    setBookLength(e.target.value);
-  };
-
-  const handleSelectUserAge = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserAge(e.target.value);
-  };
-
-  const handleSelectReadingGoal = (e: ChangeEvent<HTMLInputElement>) => {
-    setReadingGoal(e.target.value);
-  };
+  const handleSelectBookLength = (value: string) => setBookLength(value);
+  const handleSelectUserAge = (value: string) => setUserAge(value);
+  const handleSelectReadingGoal = (value: string) => setReadingGoal(value);
 
   const clearSelection = () => {
     setCurrentStep(1);
@@ -76,6 +56,24 @@ const useBookPreferences = () => {
     setUserAge('');
     setReadingGoal('');
     queryClient.invalidateQueries({ queryKey: ['recommendations'] });
+  };
+
+  const initFromParams = (params: {
+    mood: string;
+    length: string;
+    avoid: string;
+    age: string;
+    goal: string;
+  }) => {
+    const moodIds = new Set(params.mood.split(',').filter(Boolean));
+    setBookMood(bookMoodOptions.map((m) => ({ ...m, selected: moodIds.has(m.id) })));
+    setBookLength(params.length);
+    const avoidIds = new Set(params.avoid.split(',').filter(Boolean));
+    setBookCategoriesToAvoid(
+      categoriesToAvoid.map((c) => ({ ...c, selected: avoidIds.has(c.id) })),
+    );
+    setUserAge(params.age);
+    setReadingGoal(params.goal);
   };
 
   return {
@@ -93,6 +91,7 @@ const useBookPreferences = () => {
     handleSelectUserAge,
     handleSelectReadingGoal,
     clearSelection,
+    initFromParams,
   };
 };
 

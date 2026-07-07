@@ -1,13 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
-
-const inter = Inter({
-  subsets: ['latin'],
-});
+import { fontDisplay, fontSansBody } from './fonts';
 
 export const metadata: Metadata = {
   title: 'My next book',
@@ -20,9 +16,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={`${fontDisplay.variable} ${fontSansBody.variable}`}>
         <Providers>
-          <Theme>{children}</Theme>
+          <Theme
+            accentColor="green"
+            grayColor="sand"
+            radius="full"
+            appearance="light"
+            panelBackground="solid"
+            hasBackground={false}
+          >
+            {children}
+          </Theme>
         </Providers>
       </body>
     </html>

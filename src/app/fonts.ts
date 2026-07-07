@@ -1,11 +1,14 @@
-import { Boldonse, Ysabeau_Office } from 'next/font/google';
+import { Playfair_Display, Public_Sans } from 'next/font/google';
 
-export const fontBoldonse = Boldonse({
-  subsets: ['latin', 'latin-ext'],
-  weight: '400',
+export const fontDisplay = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['900'],
+  variable: '--font-display',
+  display: 'swap',
 });
 
-export const fontYsabeau = Ysabeau_Office({
+export const fontSansBody = Public_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  variable: '--font-sans-body',
+  display: 'swap',
 });

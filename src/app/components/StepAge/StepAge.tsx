@@ -1,35 +1,10 @@
 import { motion } from 'motion/react';
 import styles from './StepAge.module.css';
-
-const age = [
-  {
-    value: 'under18',
-    label: 'Under 18',
-  },
-  {
-    value: '18-24',
-    label: '18-24',
-  },
-  {
-    value: '25-40',
-    label: '25-40',
-  },
-  {
-    value: '40-60',
-    label: '40-60',
-  },
-  {
-    value: '60+',
-    label: '60+',
-  },
-  {
-    value: 'preferNotToSay',
-    label: 'Prefer not to say',
-  },
-];
+import { ageOptions } from '@/app/constants';
+import { CheckIcon } from '@radix-ui/react-icons';
 
 type StepAgeProps = {
-  handleSelectAge: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSelectAge: (value: string) => void;
   userAge: string;
 };
 
@@ -44,19 +19,29 @@ const StepAge = ({ handleSelectAge, userAge }: StepAgeProps) => {
         Which <strong>age range</strong> do you fall into? This helps us avoid
         recommendations that feel too young or too mature.
       </p>
-      <div className={styles.length}>
-        {age.map((option) => (
-          <label key={option.value}>
-            <input
-              type="radio"
-              name="books-length"
-              value={option.value}
-              onChange={handleSelectAge}
-              checked={option.value === userAge}
-            />
-            {option.label}
-          </label>
-        ))}
+      <div className={styles.options}>
+        {ageOptions.map((option, index) => {
+          const isSelected = option.value === userAge;
+          return (
+            <motion.button
+              type="button"
+              key={option.value}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleSelectAge(option.value)}
+              className={isSelected ? styles.selectedOption : styles.option}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.01 + index * 0.08,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+            >
+              {isSelected && <CheckIcon />}
+              {option.label}
+            </motion.button>
+          );
+        })}
       </div>
     </motion.div>
   );

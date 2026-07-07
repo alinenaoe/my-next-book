@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import { CheckIcon } from '@radix-ui/react-icons';
 import { MAX_MOOD_SELECTION } from '@/app/constants';
 import { Mood } from '@/app/types';
-import { fontYsabeau } from '@/app/fonts';
 import { useCallback } from 'react';
 
 type StepMoodProps = {
@@ -47,9 +46,9 @@ const StepMood = ({ moodSelection, handleSelectBookMood }: StepMoodProps) => {
               whileTap={{ scale: 0.95 }}
               onClick={(e) => handleClick(e, mood)}
               key={mood.id}
-              className={`${
+              className={
                 isSelected ? styles.selectedMoodButton : styles.moodButton
-              } ${fontYsabeau.className}`}
+              }
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
