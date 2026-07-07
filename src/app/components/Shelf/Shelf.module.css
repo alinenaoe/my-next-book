@@ -1,0 +1,166 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 40;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 90vw);
+  background: var(--color-bg-raised);
+  border-left: 2px solid var(--color-border);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-ink-faint);
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink);
+  border-radius: 4px;
+}
+
+.closeButton:hover {
+  background: var(--color-accent-soft);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+  color: var(--color-ink-muted);
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: 8px;
+}
+
+.cover {
+  border-radius: 4px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+
+  strong {
+    font-size: 0.875rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span {
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+  }
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: var(--color-ink-faint);
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.removeButton:hover {
+  color: var(--color-ink);
+  background: var(--color-accent-soft);
+}
+
+/* Floating shelf trigger button */
+.shelfButton {
+  position: fixed;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  z-index: 30;
+  background: var(--color-accent);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-border);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.shelfButton:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--color-border);
+}
+
+.shelfButton:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--color-border);
+}
+
+.badge {
+  background: var(--color-ink);
+  color: var(--color-accent-selected-text);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+}

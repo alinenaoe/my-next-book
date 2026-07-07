@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Form } from 'radix-ui';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -11,7 +12,6 @@ import {
   BookmarkIcon,
 } from '@radix-ui/react-icons';
 import Recommendations from './components/StepResult/StepResult';
-import { fontBoldonse, fontYsabeau } from '@/app/fonts';
 import StepMood from './components/StepMood/StepMood';
 import Bookmark from './components/Bookmark/Bookmark';
 import StepLength from './components/StepLength/StepLength';
@@ -19,10 +19,12 @@ import useBookPreferences from './hooks/useBookPreferences';
 import StepAvoid from './components/StepAvoid/StepAvoid';
 import StepAge from './components/StepAge/StepAge';
 import StepGoal from './components/StepGoal/StepGoal';
+import StepLoading from './components/StepLoading/StepLoading';
+import { Shelf, ShelfButton } from './components/Shelf/Shelf';
 import { useGetRecommendations } from './hooks/useGetRecommendations';
-import { useEffect } from 'react';
+import { useBookshelf } from './hooks/useBookshelf';
 import { Button, Spinner } from '@radix-ui/themes';
-
+import StepProgress from './components/StepProgress/StepProgress';
 
 const MotionButton = motion.create(Button);
 
@@ -42,9 +44,10 @@ export default function Home() {
     handleSelectReadingGoal,
     readingGoal,
     clearSelection,
+    initFromParams,
   } = useBookPreferences();
 
-  const { data, isFetching, refetch } = useGetRecommendations({
+  const { data, isFetching, isError, refetch } = useGetRecommendations({
     params: {
       categoriesToAvoid: bookCategoriesToAvoid
         .filter((category) => category.selected)
@@ -56,159 +59,260 @@ export default function Home() {
     },
   });
 
+  const { savedBooks, toggleBook } = useBookshelf();
+  const [isShelfOpen, setIsShelfOpen] = useState(false);
+
+  // Trigger fetch after state has been updated (used by surprise + URL params)
+  const [shouldFetch, setShouldFetch] = useState(false);
+  useEffect(() => {
+    if (shouldFetch) {
+      setShouldFetch(false);
+      refetch();
+    }
+  }, [shouldFetch, refetch]);
+
+  // Auto-load from shareable URL params on first render
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const mood = params.get('mood');
+    const length = params.get('length');
+    const avoid = params.get('avoid');
+    const age = params.get('age');
+    const goal = params.get('goal');
+
+    if (mood && length && avoid && age && goal) {
+      initFromParams({ mood, length, avoid, age, goal });
+      setCurrentStep(5);
+      setShouldFetch(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (data && !isFetching) {
       setCurrentStep(6);
     }
   }, [data, setCurrentStep, isFetching]);
 
+  const buildShareURL = () => {
+    const params = new URLSearchParams({
+      mood: bookMood.filter((m) => m.selected).map((m) => m.id).join(','),
+      length: bookLength,
+      avoid: bookCategoriesToAvoid.filter((c) => c.selected).map((c) => c.id).join(','),
+      age: userAge,
+      goal: readingGoal,
+    });
+    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+  };
+
+  const handleShare = async () => {
+    const url = buildShareURL();
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title: 'My next book recommendations', url });
+      } catch {
+        // user cancelled
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+    }
+  };
+
+  const handleEmail = () => {
+    if (!data) return;
+    const subject = 'My next book recommendations';
+    const body = data.map((b) => `${b.title} by ${b.author}`).join('\n');
+    window.open(
+      `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+    );
+  };
+
   return (
     <div className={styles.page}>
       <Bookmark />
-      <main className={`${styles.main} ${fontYsabeau.className}`}>
-        <h1 className={fontBoldonse.className}>
-          {currentStep < 6 ? 'What should I read next?' : 'Good reading!'}
-        </h1>
+      <ShelfButton count={savedBooks.length} onClick={() => setIsShelfOpen(true)} />
+      <Shelf
+        isOpen={isShelfOpen}
+        onClose={() => setIsShelfOpen(false)}
+        books={savedBooks}
+        onRemove={toggleBook}
+      />
+
+      <main className={styles.main}>
+        <h1>{currentStep < 6 ? 'What should I read next?' : 'Good reading!'}</h1>
+
+        {currentStep < 6 && !isFetching && (
+          <StepProgress currentStep={currentStep} totalSteps={5} />
+        )}
 
         <Form.Root className={styles.form}>
-          {currentStep === 1 && (
-            <StepMood
-              handleSelectBookMood={handleSelectBookMood}
-              moodSelection={bookMood}
-            />
-          )}
-
-          {currentStep === 2 && (
-            <StepLength
-              bookLength={bookLength}
-              handleSelectBookLength={handleSelectBookLength}
-            />
-          )}
-
-          {currentStep === 3 && (
-            <StepAvoid
-              handleSelectBookCategoryToAvoid={handleSelectBookCategoryToAvoid}
-              categories={bookCategoriesToAvoid}
-            />
-          )}
-          {currentStep === 4 && (
-            <StepAge handleSelectAge={handleSelectUserAge} userAge={userAge} />
-          )}
-          {currentStep === 5 && (
-            <StepGoal
-              handleSelectGoal={handleSelectReadingGoal}
-              readingGoal={readingGoal}
-            />
-          )}
-
-          {currentStep === 6 && <Recommendations books={data} />}
-
-          <div className={styles.buttons}>
-            {currentStep < 5 && (
-              <>
-                <MotionButton
-                  color="indigo"
-                  size="3"
-                  variant="solid"
-                  highContrast
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentStep((value) => value - 1);
-                  }}
-                  style={{
-                    borderColor: currentStep === 1 ? '#E0E0E0' : 'unset',
-                  }}
-                  disabled={currentStep === 1}
-                >
-                  <ArrowLeftIcon />
-                  Previous
-                </MotionButton>
-                <MotionButton
-                  color="indigo"
-                  size="3"
-                  variant="solid"
-                  highContrast
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentStep((value) => value + 1);
-                  }}
-                  disabled={nextButtonDisabled}
-                >
-                  Next
-                  <ArrowRightIcon />
-                </MotionButton>
-              </>
+          <AnimatePresence mode="wait">
+            {currentStep === 1 && !isFetching && (
+              <StepMood
+                key="mood"
+                handleSelectBookMood={handleSelectBookMood}
+                moodSelection={bookMood}
+              />
             )}
 
-            {currentStep === 5 && (
-              <div className={styles.result}>
-                <MotionButton
-                  color="indigo"
-                  size="3"
-                  variant="solid"
-                  highContrast
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentStep((value) => value - 1);
-                  }}
-                  disabled={isFetching}
-                >
-                  <ArrowLeftIcon />
-                  Previous
-                </MotionButton>
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    refetch();
-                  }}
-                  disabled={nextButtonDisabled || isFetching}
-                  color="green"
-                  size="3"
-                >
-                  {isFetching && (
-                    <>
-                      <Spinner loading />
-                      Generating recommendations...
-                    </>
+            {currentStep === 2 && !isFetching && (
+              <StepLength
+                key="length"
+                bookLength={bookLength}
+                handleSelectBookLength={handleSelectBookLength}
+              />
+            )}
+
+            {currentStep === 3 && !isFetching && (
+              <StepAvoid
+                key="avoid"
+                handleSelectBookCategoryToAvoid={handleSelectBookCategoryToAvoid}
+                categories={bookCategoriesToAvoid}
+              />
+            )}
+
+            {currentStep === 4 && !isFetching && (
+              <StepAge
+                key="age"
+                handleSelectAge={handleSelectUserAge}
+                userAge={userAge}
+              />
+            )}
+
+            {currentStep === 5 && !isFetching && (
+              <StepGoal
+                key="goal"
+                handleSelectGoal={handleSelectReadingGoal}
+                readingGoal={readingGoal}
+              />
+            )}
+
+            {isFetching && <StepLoading key="loading" />}
+
+            {currentStep === 6 && !isFetching && (
+              <Recommendations key="results" books={data ?? []} />
+            )}
+          </AnimatePresence>
+
+          {isError && currentStep === 5 && !isFetching && (
+            <p className={styles.error}>Something went wrong. Please try again.</p>
+          )}
+
+          {!isFetching && (
+            <div className={styles.buttons}>
+              {currentStep < 5 && (
+                <>
+                  <MotionButton
+                    color="green"
+                    size="3"
+                    variant="solid"
+                    highContrast
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentStep((value) => value - 1);
+                    }}
+                    disabled={currentStep === 1}
+                  >
+                    <ArrowLeftIcon />
+                    Previous
+                  </MotionButton>
+                  <MotionButton
+                    color="green"
+                    size="3"
+                    variant="solid"
+                    highContrast
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentStep((value) => value + 1);
+                    }}
+                    disabled={nextButtonDisabled}
+                  >
+                    Next
+                    <ArrowRightIcon />
+                  </MotionButton>
+                  {currentStep > 1 && (
+                    <Button
+                      color="gray"
+                      size="3"
+                      variant="solid"
+                      highContrast
+                      onClick={clearSelection}
+                    >
+                      Start over
+                    </Button>
                   )}
+                </>
+              )}
 
-                  {!isFetching && (
-                    <>
-                      <BookmarkIcon /> Get my recommendations
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
+              {currentStep === 5 && (
+                <div className={styles.result}>
+                  <MotionButton
+                    color="green"
+                    size="3"
+                    variant="solid"
+                    highContrast
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentStep((value) => value - 1);
+                    }}
+                  >
+                    <ArrowLeftIcon />
+                    Previous
+                  </MotionButton>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      refetch();
+                    }}
+                    disabled={nextButtonDisabled}
+                    color="green"
+                    variant="solid"
+                    highContrast
+                    size="3"
+                  >
+                    <BookmarkIcon /> Get my recommendations
+                  </Button>
+                  <Button
+                    color="gray"
+                    size="3"
+                    variant="solid"
+                    highContrast
+                    onClick={clearSelection}
+                  >
+                    Start over
+                  </Button>
+                </div>
+              )}
 
-            {currentStep === 6 && (
-              <div className={styles.result}>
-                <Button color="green" size="3" variant="solid">
-                  <Share1Icon />
-                  Share
-                </Button>
-                <Button color="green" size="3" variant="solid">
-                  <EnvelopeClosedIcon />
-                  Send by email
-                </Button>
-                <Button
-                  color="indigo"
-                  size="3"
-                  variant="solid"
-                  highContrast
-                  onClick={(e) => {
-                    e.preventDefault();
-                    clearSelection();
-                  }}
-                >
-                  Restart
-                </Button>
-              </div>
-            )}
-          </div>
+              {currentStep === 6 && (
+                <div className={styles.result}>
+                  <Button color="green" size="3" variant="soft" onClick={handleShare}>
+                    <Share1Icon />
+                    Share
+                  </Button>
+                  <Button color="green" size="3" variant="soft" onClick={handleEmail}>
+                    <EnvelopeClosedIcon />
+                    Send by email
+                  </Button>
+                  <Button
+                    color="green"
+                    size="3"
+                    variant="solid"
+                    highContrast
+                    onClick={(e) => {
+                      e.preventDefault();
+                      clearSelection();
+                    }}
+                  >
+                    Restart
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </Form.Root>
       </main>
     </div>
