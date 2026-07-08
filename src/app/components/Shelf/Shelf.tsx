@@ -67,6 +67,7 @@ export const Shelf = ({ isOpen, onClose, books, onRemove }: ShelfProps) => {
                           height={78}
                           alt={`Cover of ${book.title}`}
                           className={styles.cover}
+                          unoptimized
                         />
                       </Link>
                     ) : null}

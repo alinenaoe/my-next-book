@@ -6,7 +6,7 @@ const contentSecurityPolicy = [
   // the inline styles injected by Radix Themes and Motion
   "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: https://books.google.com",
+  "img-src 'self' data: https://books.google.com http://books.google.com",
   "connect-src 'self' https://my-next-book-api.onrender.com",
   "font-src 'self' data:",
   "object-src 'none'",

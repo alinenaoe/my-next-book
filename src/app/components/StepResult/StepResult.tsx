@@ -55,6 +55,7 @@ const Recommendations = ({ books, toggleBook, isSaved }: RecommendationsProps) =
                 width={128}
                 height={198}
                 alt={`Cover of ${book.title}`}
+                unoptimized
               />
             </MotionBook>
           ) : null}
