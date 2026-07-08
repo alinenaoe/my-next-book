@@ -1,6 +1,6 @@
 # My Next Book
 
-<img width="600" alt="" src="https://github.com/user-attachments/assets/7c92b319-0bfc-4a09-b23e-ce6b6402719f" />
+<img width="1080" height="748" alt="Screenshot 2026-07-08 at 12 34 50" src="https://github.com/user-attachments/assets/5a97b358-a51c-429a-9303-7fc4538ecf8d" />
 
 ## Description
 
@@ -16,7 +16,7 @@ One of the app's unique features is its commitment to diversity. The recommendat
 - **Reading Shelf**: Save books you're interested in to a personal shelf, persisted across sessions.
 - **Responsive Design**: Works seamlessly on both desktop and mobile devices.
 
-<img width="600" alt="" src="https://github.com/user-attachments/assets/28c5a612-328f-4136-88af-f33d684aeb06" />
+<img width="1087" height="663" alt="Screenshot 2026-07-08 at 17 32 36" src="https://github.com/user-attachments/assets/ba7e8ae4-49e4-41ad-bc66-e0715bfe8d2f" />
 
 ## Recommendations engine
 
