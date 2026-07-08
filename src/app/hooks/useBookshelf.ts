@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 import { RecommendedBook } from '@/app/types';
+import { isRecommendedBook, sanitizeBook } from '@/app/utils/sanitizeBook';
 
 const STORAGE_KEY = 'my-next-book-shelf';
 
 const loadFromStorage = (): RecommendedBook[] => {
   if (typeof window === 'undefined') return [];
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    const parsed: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(isRecommendedBook).map(sanitizeBook);
   } catch {
     return [];
   }

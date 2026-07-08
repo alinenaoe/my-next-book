@@ -1,4 +1,5 @@
 import { RecommendedBook } from '@/app/types';
+import { isRecommendedBook, sanitizeBook } from '@/app/utils/sanitizeBook';
 
 export type GenerateRecommendationsParams = {
   mood: string[];
@@ -26,7 +27,11 @@ const generateRecommendations = async (
     throw new Error('Failed to fetch recommendations');
   }
 
-  return response.json();
+  const books: unknown = await response.json();
+  if (!Array.isArray(books)) {
+    throw new Error('Unexpected recommendations response');
+  }
+  return books.filter(isRecommendedBook).map(sanitizeBook);
 };
 
 export default generateRecommendations;

@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { bookMoodOptions, categoriesToAvoid } from '@/app/constants';
+import {
+  bookMoodOptions,
+  categoriesToAvoid,
+  length as lengthOptions,
+  ageOptions,
+  readingGoalOptions,
+  MAX_MOOD_SELECTION,
+  MAX_CATEGORIES_SELECTION,
+} from '@/app/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { Mood, Category } from '@/app/types';
 
@@ -64,16 +72,35 @@ const useBookPreferences = () => {
     avoid: string;
     age: string;
     goal: string;
-  }) => {
-    const moodIds = new Set(params.mood.split(',').filter(Boolean));
-    setBookMood(bookMoodOptions.map((m) => ({ ...m, selected: moodIds.has(m.id) })));
+  }): boolean => {
+    const moodIds = params.mood.split(',').filter(Boolean);
+    const avoidIds = params.avoid.split(',').filter(Boolean);
+    const validMoodIds = new Set(bookMoodOptions.map((m) => m.id));
+    const validAvoidIds = new Set(categoriesToAvoid.map((c) => c.id));
+
+    const isValid =
+      moodIds.length > 0 &&
+      moodIds.length <= MAX_MOOD_SELECTION &&
+      moodIds.every((id) => validMoodIds.has(id)) &&
+      avoidIds.length > 0 &&
+      avoidIds.length <= MAX_CATEGORIES_SELECTION &&
+      avoidIds.every((id) => validAvoidIds.has(id)) &&
+      lengthOptions.some((option) => option.value === params.length) &&
+      ageOptions.some((option) => option.value === params.age) &&
+      readingGoalOptions.some((option) => option.value === params.goal);
+
+    if (!isValid) return false;
+
+    const moodSet = new Set(moodIds);
+    setBookMood(bookMoodOptions.map((m) => ({ ...m, selected: moodSet.has(m.id) })));
     setBookLength(params.length);
-    const avoidIds = new Set(params.avoid.split(',').filter(Boolean));
+    const avoidSet = new Set(avoidIds);
     setBookCategoriesToAvoid(
-      categoriesToAvoid.map((c) => ({ ...c, selected: avoidIds.has(c.id) })),
+      categoriesToAvoid.map((c) => ({ ...c, selected: avoidSet.has(c.id) })),
     );
     setUserAge(params.age);
     setReadingGoal(params.goal);
+    return true;
   };
 
   return {

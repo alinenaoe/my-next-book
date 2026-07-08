@@ -83,9 +83,11 @@ export default function Home() {
     const goal = params.get('goal');
 
     if (mood && length && avoid && age && goal) {
-      initFromParams({ mood, length, avoid, age, goal });
-      setCurrentStep(5);
-      setShouldFetch(true);
+      const isValid = initFromParams({ mood, length, avoid, age, goal });
+      if (isValid) {
+        setCurrentStep(5);
+        setShouldFetch(true);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -271,7 +273,7 @@ export default function Home() {
                   </MotionButton>
                   <Button
                     type="button"
-                    onClick={refetch}
+                    onClick={() => refetch()}
                     disabled={nextButtonDisabled}
                     color="green"
                     variant="solid"
