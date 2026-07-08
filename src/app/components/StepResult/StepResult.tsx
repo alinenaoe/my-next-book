@@ -80,6 +80,7 @@ const Recommendations = ({ books }: RecommendationsProps) => {
           </dl>
 
           <button
+            type="button"
             onClick={() => toggleBook(book)}
             className={`${styles.bookmarkButton} ${isSaved(book.title) ? styles.bookmarkSaved : ''}`}
             aria-label={

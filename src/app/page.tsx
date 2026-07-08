@@ -10,6 +10,7 @@ import {
   EnvelopeClosedIcon,
   Share1Icon,
   BookmarkIcon,
+  CheckIcon,
 } from '@radix-ui/react-icons';
 import Recommendations from './components/StepResult/StepResult';
 import StepMood from './components/StepMood/StepMood';
@@ -61,6 +62,7 @@ export default function Home() {
 
   const { savedBooks, toggleBook } = useBookshelf();
   const [isShelfOpen, setIsShelfOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Trigger fetch after state has been updated (used by surprise + URL params)
   const [shouldFetch, setShouldFetch] = useState(false);
@@ -115,13 +117,23 @@ export default function Home() {
       }
     } else {
       await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
   const handleEmail = () => {
     if (!data) return;
     const subject = 'My next book recommendations';
-    const body = data.map((b) => `${b.title} by ${b.author}`).join('\n');
+    const body = [
+      'Here are some book recommendations just for me:',
+      '',
+      ...data.map((b, i) =>
+        `${i + 1}. ${b.title} by ${b.author}\n   ${b.abstract}`,
+      ),
+      '',
+      'Get your own recommendations at: ' + buildShareURL(),
+    ].join('\n');
     window.open(
       `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
     );
@@ -203,30 +215,26 @@ export default function Home() {
               {currentStep < 5 && (
                 <>
                   <MotionButton
+                    type="button"
                     color="green"
                     size="3"
                     variant="solid"
                     highContrast
                     whileTap={{ scale: 0.95 }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setCurrentStep((value) => value - 1);
-                    }}
+                    onClick={() => setCurrentStep((value) => value - 1)}
                     disabled={currentStep === 1}
                   >
                     <ArrowLeftIcon />
                     Previous
                   </MotionButton>
                   <MotionButton
+                    type="button"
                     color="green"
                     size="3"
                     variant="solid"
                     highContrast
                     whileTap={{ scale: 0.95 }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setCurrentStep((value) => value + 1);
-                    }}
+                    onClick={() => setCurrentStep((value) => value + 1)}
                     disabled={nextButtonDisabled}
                   >
                     Next
@@ -234,6 +242,7 @@ export default function Home() {
                   </MotionButton>
                   {currentStep > 1 && (
                     <Button
+                      type="button"
                       color="gray"
                       size="3"
                       variant="solid"
@@ -249,24 +258,20 @@ export default function Home() {
               {currentStep === 5 && (
                 <div className={styles.result}>
                   <MotionButton
+                    type="button"
                     color="green"
                     size="3"
                     variant="solid"
                     highContrast
                     whileTap={{ scale: 0.95 }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setCurrentStep((value) => value - 1);
-                    }}
+                    onClick={() => setCurrentStep((value) => value - 1)}
                   >
                     <ArrowLeftIcon />
                     Previous
                   </MotionButton>
                   <Button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      refetch();
-                    }}
+                    type="button"
+                    onClick={refetch}
                     disabled={nextButtonDisabled}
                     color="green"
                     variant="solid"
@@ -276,6 +281,7 @@ export default function Home() {
                     <BookmarkIcon /> Get my recommendations
                   </Button>
                   <Button
+                    type="button"
                     color="gray"
                     size="3"
                     variant="solid"
@@ -289,23 +295,21 @@ export default function Home() {
 
               {currentStep === 6 && (
                 <div className={styles.result}>
-                  <Button color="green" size="3" variant="soft" onClick={handleShare}>
-                    <Share1Icon />
-                    Share
+                  <Button type="button" color="green" size="3" variant="soft" onClick={handleShare}>
+                    {copied ? <CheckIcon /> : <Share1Icon />}
+                    {copied ? 'Copied!' : 'Share'}
                   </Button>
-                  <Button color="green" size="3" variant="soft" onClick={handleEmail}>
+                  <Button type="button" color="green" size="3" variant="soft" onClick={handleEmail}>
                     <EnvelopeClosedIcon />
                     Send by email
                   </Button>
                   <Button
+                    type="button"
                     color="green"
                     size="3"
                     variant="solid"
                     highContrast
-                    onClick={(e) => {
-                      e.preventDefault();
-                      clearSelection();
-                    }}
+                    onClick={clearSelection}
                   >
                     Restart
                   </Button>
