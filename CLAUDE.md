@@ -24,15 +24,19 @@ There are no tests configured yet.
 
 **Data fetching** — `useGetRecommendations` (hooks/useGetRecommendations.tsx) wraps TanStack Query with `enabled: false`, so the query only runs when `refetch()` is called explicitly (on the final "Get my recommendations" button). The query key `['recommendations']` is invalidated on `clearSelection` to allow fresh fetches on restart.
 
-**API** — `src/app/services/generateRecommendations.ts` POSTs to `https://my-next-book-api.onrender.com/recommendations`. The backend repo is separate (Node.js/Fastify, uses an LLM + Google Books API).
+**API** — `src/app/services/generateRecommendations.ts` POSTs to `https://my-next-book-api.onrender.com/recommendations`. The backend repo is separate (Node.js/Fastify, uses an LLM + Google Books API). The API may return `null` for `coverUrl` and `googleBooksLink` when the Google Books lookup fails.
+
+**Data sanitization** — `src/app/utils/sanitizeBook.ts` validates the shape of each book from the API or localStorage (`isRecommendedBook`) and sanitizes URLs (`sanitizeBook`): upgrades cover URLs to https and falls back to a Google Books search URL when `googleBooksLink` is null.
 
 **Mock data** — `src/app/books.mock.tsx` contains a static array of books used for development/testing without hitting the real API.
 
 **Global state provider** — `src/app/providers.tsx` wraps the app in `QueryClientProvider`. The `Theme` wrapper from `@radix-ui/themes` lives in `layout.tsx`.
 
-**Constants** — `src/app/constants.ts` defines the selectable options (moods, categories, lengths) and selection limits (`MAX_MOOD_SELECTION = 3`, `MAX_CATEGORIES_SELECTION = 3`). Add or modify options here.
+**Constants** — `src/app/constants.ts` defines the selectable options (moods, categories, lengths) and selection limits (`MAX_MOOD_SELECTION = 3`, `MAX_CATEGORIES_SELECTION = 3`). Add or modify options here. `initFromParams` in `useBookPreferences` validates shareable-URL query params against these allowlists before applying them.
 
-**Types** — `src/app/types.ts` defines `Category` (id, label, selected) and `Mood` (alias of Category), the shared shape used across all step components.
+**Types** — `src/app/types.ts` defines `Category` (id, label, selected), `Mood` (alias of Category), and `RecommendedBook`. `coverUrl` and `googleBooksLink` are always strings after sanitization (empty string and search URL respectively when the API returns null).
+
+**Bookshelf state** — `useBookshelf` (hooks/useBookshelf.ts) is instantiated once in `page.tsx`. `toggleBook` and `isSaved` are passed as props to `StepResult` so the shelf button count and drawer stay in sync with saves made from the results view.
 
 **Styling** — CSS Modules per component + `globals.css`. Radix UI Themes provides the component library; `@radix-ui/react-icons` for icons. Motion (Framer Motion v12) is used for button tap animations.
 

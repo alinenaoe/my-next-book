@@ -50,22 +50,38 @@ const Recommendations = ({
           className={styles.book}
           variants={itemVariants}
         >
-          {book.coverUrl ? (
-            <MotionBook
-              whileHover={{ scale: 1.02 }}
-              href={book.googleBooksLink}
-              target="_blank"
-              rel="noopener noreferrer"
+          <div className={styles.coverColumn}>
+            {book.coverUrl ? (
+              <MotionBook
+                whileHover={{ scale: 1.02 }}
+                href={book.googleBooksLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src={book.coverUrl}
+                  width={128}
+                  height={198}
+                  alt={`Cover of ${book.title}`}
+                  unoptimized
+                />
+              </MotionBook>
+            ) : null}
+
+            <button
+              type="button"
+              onClick={() => toggleBook(book)}
+              className={`${styles.bookmarkButton} ${isSaved(book.title) ? styles.bookmarkSaved : ''}`}
+              aria-label={
+                isSaved(book.title)
+                  ? `Remove ${book.title} from shelf`
+                  : `Save ${book.title} to shelf`
+              }
             >
-              <Image
-                src={book.coverUrl}
-                width={128}
-                height={198}
-                alt={`Cover of ${book.title}`}
-                unoptimized
-              />
-            </MotionBook>
-          ) : null}
+              <BookmarkIcon width={14} height={14} />
+              {isSaved(book.title) ? 'Saved' : 'Add to shelf'}
+            </button>
+          </div>
 
           <dl className={styles.description}>
             <div>
@@ -88,19 +104,6 @@ const Recommendations = ({
               <dd>{book.reason}</dd>
             </div>
           </dl>
-
-          <button
-            type="button"
-            onClick={() => toggleBook(book)}
-            className={`${styles.bookmarkButton} ${isSaved(book.title) ? styles.bookmarkSaved : ''}`}
-            aria-label={
-              isSaved(book.title)
-                ? `Remove ${book.title} from shelf`
-                : `Save ${book.title} to shelf`
-            }
-          >
-            <BookmarkIcon width={16} height={16} />
-          </button>
         </motion.div>
       ))}
     </motion.div>
