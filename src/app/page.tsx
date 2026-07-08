@@ -89,7 +89,7 @@ export default function Home() {
         setShouldFetch(true);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -100,9 +100,15 @@ export default function Home() {
 
   const buildShareURL = () => {
     const params = new URLSearchParams({
-      mood: bookMood.filter((m) => m.selected).map((m) => m.id).join(','),
+      mood: bookMood
+        .filter((m) => m.selected)
+        .map((m) => m.id)
+        .join(','),
       length: bookLength,
-      avoid: bookCategoriesToAvoid.filter((c) => c.selected).map((c) => c.id).join(','),
+      avoid: bookCategoriesToAvoid
+        .filter((c) => c.selected)
+        .map((c) => c.id)
+        .join(','),
       age: userAge,
       goal: readingGoal,
     });
@@ -130,8 +136,8 @@ export default function Home() {
     const body = [
       'Here are some book recommendations just for me:',
       '',
-      ...data.map((b, i) =>
-        `${i + 1}. ${b.title} by ${b.author}\n   ${b.abstract}`,
+      ...data.map(
+        (b, i) => `${i + 1}. ${b.title} by ${b.author}\n   ${b.abstract}`,
       ),
       '',
       'Get your own recommendations at: ' + buildShareURL(),
@@ -144,7 +150,10 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <Bookmark />
-      <ShelfButton count={savedBooks.length} onClick={() => setIsShelfOpen(true)} />
+      <ShelfButton
+        count={savedBooks.length}
+        onClick={() => setIsShelfOpen(true)}
+      />
       <Shelf
         isOpen={isShelfOpen}
         onClose={() => setIsShelfOpen(false)}
@@ -153,7 +162,9 @@ export default function Home() {
       />
 
       <main className={styles.main}>
-        <h1>{currentStep < 6 ? 'What should I read next?' : 'Good reading!'}</h1>
+        <h1>
+          {currentStep < 6 ? 'What should I read next?' : 'Good reading!'}
+        </h1>
 
         {currentStep < 6 && !isFetching && (
           <StepProgress currentStep={currentStep} totalSteps={5} />
@@ -180,7 +191,9 @@ export default function Home() {
             {currentStep === 3 && !isFetching && (
               <StepAvoid
                 key="avoid"
-                handleSelectBookCategoryToAvoid={handleSelectBookCategoryToAvoid}
+                handleSelectBookCategoryToAvoid={
+                  handleSelectBookCategoryToAvoid
+                }
                 categories={bookCategoriesToAvoid}
               />
             )}
@@ -204,12 +217,19 @@ export default function Home() {
             {isFetching && <StepLoading key="loading" />}
 
             {currentStep === 6 && !isFetching && (
-              <Recommendations key="results" books={data ?? []} toggleBook={toggleBook} isSaved={isSaved} />
+              <Recommendations
+                key="results"
+                books={data ?? []}
+                toggleBook={toggleBook}
+                isSaved={isSaved}
+              />
             )}
           </AnimatePresence>
 
           {isError && currentStep === 5 && !isFetching && (
-            <p className={styles.error}>Something went wrong. Please try again.</p>
+            <p className={styles.error}>
+              Something went wrong. Please try again.
+            </p>
           )}
 
           {!isFetching && (
@@ -297,11 +317,23 @@ export default function Home() {
 
               {currentStep === 6 && (
                 <div className={styles.result}>
-                  <Button type="button" color="green" size="3" variant="soft" onClick={handleShare}>
+                  <Button
+                    type="button"
+                    color="green"
+                    size="3"
+                    variant="soft"
+                    onClick={handleShare}
+                  >
                     {copied ? <CheckIcon /> : <Share1Icon />}
                     {copied ? 'Copied!' : 'Share'}
                   </Button>
-                  <Button type="button" color="green" size="3" variant="soft" onClick={handleEmail}>
+                  <Button
+                    type="button"
+                    color="green"
+                    size="3"
+                    variant="soft"
+                    onClick={handleEmail}
+                  >
                     <EnvelopeClosedIcon />
                     Send by email
                   </Button>
