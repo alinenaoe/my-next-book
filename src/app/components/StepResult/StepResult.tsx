@@ -32,8 +32,11 @@ const itemVariants = {
   },
 };
 
-const Recommendations = ({ books, toggleBook, isSaved }: RecommendationsProps) => {
-
+const Recommendations = ({
+  books,
+  toggleBook,
+  isSaved,
+}: RecommendationsProps) => {
   return (
     <motion.div
       className={styles.container}
@@ -42,7 +45,11 @@ const Recommendations = ({ books, toggleBook, isSaved }: RecommendationsProps) =
       animate="visible"
     >
       {books.map((book) => (
-        <motion.div key={book.title} className={styles.book} variants={itemVariants}>
+        <motion.div
+          key={book.title}
+          className={styles.book}
+          variants={itemVariants}
+        >
           {book.coverUrl ? (
             <MotionBook
               whileHover={{ scale: 1.02 }}
