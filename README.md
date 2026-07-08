@@ -10,10 +10,11 @@ One of the app's unique features is its commitment to diversity. The recommendat
 
 ## Features
 
-- **Interactive Steps**: Users go through multiple steps to define their preferences, such as mood, length, and goals.
-- **Personalized Recommendations**: The app uses a recommendation engine to suggest books that match the user's preferences.
-- **Responsive Design**: The app is designed to work seamlessly on both desktop and mobile devices.
-- **Share recommendations**: _(coming soon)_
+- **Interactive Steps**: Users go through multiple steps to define their preferences — mood, length, categories to avoid, age group, and reading goal.
+- **Personalized Recommendations**: The app uses an AI-powered recommendation engine to suggest books that match the user's preferences.
+- **Shareable URL**: Every set of recommendations generates a shareable link so results can be revisited or sent to others.
+- **Reading Shelf**: Save books you're interested in to a personal shelf, persisted across sessions.
+- **Responsive Design**: Works seamlessly on both desktop and mobile devices.
 
 <img width="600" alt="" src="https://github.com/user-attachments/assets/28c5a612-328f-4136-88af-f33d684aeb06" />
 
@@ -27,4 +28,7 @@ The app leverages OpenAI to generate personalized book suggestions based on user
 
 - **Next.js**: A React-based framework for building fast and user-friendly web applications.
 - **TypeScript**: Ensures type safety and better developer experience.
+- **TanStack Query**: Data fetching and server state management.
+- **Radix UI**: Accessible component library and design system.
+- **Motion**: Animations and transitions.
 - **CSS Modules**: For modular and maintainable styling.
