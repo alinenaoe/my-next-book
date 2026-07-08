@@ -43,19 +43,21 @@ const Recommendations = ({ books }: RecommendationsProps) => {
     >
       {books.map((book) => (
         <motion.div key={book.title} className={styles.book} variants={itemVariants}>
-          <MotionBook
-            whileHover={{ scale: 1.02 }}
-            href={book.googleBooksLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src={book.coverUrl}
-              width={128}
-              height={198}
-              alt={`Cover of ${book.title}`}
-            />
-          </MotionBook>
+          {book.coverUrl ? (
+            <MotionBook
+              whileHover={{ scale: 1.02 }}
+              href={book.googleBooksLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src={book.coverUrl}
+                width={128}
+                height={198}
+                alt={`Cover of ${book.title}`}
+              />
+            </MotionBook>
+          ) : null}
 
           <dl className={styles.description}>
             <div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RecommendedBook } from '@/app/types';
 import { isRecommendedBook, sanitizeBook } from '@/app/utils/sanitizeBook';
 
@@ -18,7 +18,11 @@ const loadFromStorage = (): RecommendedBook[] => {
 };
 
 export const useBookshelf = () => {
-  const [savedBooks, setSavedBooks] = useState<RecommendedBook[]>(loadFromStorage);
+  const [savedBooks, setSavedBooks] = useState<RecommendedBook[]>([]);
+
+  useEffect(() => {
+    setSavedBooks(loadFromStorage());
+  }, []);
 
   const toggleBook = (book: RecommendedBook) => {
     setSavedBooks((prev) => {

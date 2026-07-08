@@ -55,19 +55,21 @@ export const Shelf = ({ isOpen, onClose, books, onRemove }: ShelfProps) => {
               <ul className={styles.list}>
                 {books.map((book) => (
                   <li key={book.title} className={styles.item}>
-                    <Link
-                      href={book.googleBooksLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Image
-                        src={book.coverUrl}
-                        width={52}
-                        height={78}
-                        alt={`Cover of ${book.title}`}
-                        className={styles.cover}
-                      />
-                    </Link>
+                    {book.coverUrl ? (
+                      <Link
+                        href={book.googleBooksLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Image
+                          src={book.coverUrl}
+                          width={52}
+                          height={78}
+                          alt={`Cover of ${book.title}`}
+                          className={styles.cover}
+                        />
+                      </Link>
+                    ) : null}
                     <div className={styles.info}>
                       <strong>{book.title}</strong>
                       <span>{book.author}</span>
