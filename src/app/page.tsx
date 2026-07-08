@@ -60,7 +60,7 @@ export default function Home() {
     },
   });
 
-  const { savedBooks, toggleBook } = useBookshelf();
+  const { savedBooks, toggleBook, isSaved } = useBookshelf();
   const [isShelfOpen, setIsShelfOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -204,7 +204,7 @@ export default function Home() {
             {isFetching && <StepLoading key="loading" />}
 
             {currentStep === 6 && !isFetching && (
-              <Recommendations key="results" books={data ?? []} />
+              <Recommendations key="results" books={data ?? []} toggleBook={toggleBook} isSaved={isSaved} />
             )}
           </AnimatePresence>
 

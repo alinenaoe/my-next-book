@@ -7,10 +7,11 @@ import { BookmarkIcon } from '@radix-ui/react-icons';
 
 import styles from './StepResult.module.css';
 import { RecommendedBook } from '@/app/types';
-import { useBookshelf } from '@/app/hooks/useBookshelf';
 
 type RecommendationsProps = {
   books: RecommendedBook[];
+  toggleBook: (book: RecommendedBook) => void;
+  isSaved: (title: string) => boolean;
 };
 
 const MotionBook = motion.create(Link);
@@ -31,8 +32,7 @@ const itemVariants = {
   },
 };
 
-const Recommendations = ({ books }: RecommendationsProps) => {
-  const { isSaved, toggleBook } = useBookshelf();
+const Recommendations = ({ books, toggleBook, isSaved }: RecommendationsProps) => {
 
   return (
     <motion.div
